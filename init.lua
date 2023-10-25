@@ -17,13 +17,6 @@ Services = {
 Servers = {
   TesteServer = "134.65.253.242:7171:861",
   Tenebra = "tenebra-global.com:7171:860"
---[[  OTClientV8 = "http://otclient.ovh/api/login.php",
-  OTClientV8proxy = "http://otclient.ovh/api/login.php?proxy=1",
-  OTClientV8c = "otclient.ovh:7171:1099:25:30:80:90",
-  OTClientV8Test = "http://otclient.ovh/api/login2.php",
-  Evoulinia = "evolunia.net:7171:1098",
-  GarneraTest = "garnera-global.net:7171:1100",
-  LocalTestServ = "127.0.0.1:7171:1098:110:30:93"  ]]
 }
 
 --Server = "ws://otclient.ovh:3000/"
