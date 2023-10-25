@@ -1,0 +1,160 @@
+RowListLoot < UIWidget
+  id: rowLoot
+  size: 50 55
+  background-color: #00000022
+  border: 0 #039be5
+  $focus:
+    border: 1 #0077ff
+    background-color: #72CAFD22
+
+  Item
+    id: rowItem
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin: 10 0 0 8
+
+  Label
+    id: rowItemName
+    anchors.top: parent.top
+    anchors.left: rowItem.right
+    margin: 20 0 0 10
+    text-auto-resize: true
+    !text: tr('Empty Slot')
+
+MainWindow
+  id: gw_AutoLoot
+  size: 520 350
+  !text: tr('Auto-Loot')
+  &focusable: false
+  @onEscape: onCloseAutoLoot()
+
+  TextList
+    id: listLoot
+    size: 240 225
+    anchors.top: parent.top
+    anchors.left: parent.left
+    margin-bottom: 10
+    padding: 2
+    vertical-scrollbar: lootScrollBar
+    focusable: false
+    background-color: #00000077
+
+  VerticalScrollBar
+    id: lootScrollBar
+    anchors.top: listLoot.top
+    anchors.bottom: listLoot.bottom
+    anchors.left: listLoot.right
+    step: 50
+    pixels-scroll: true
+
+  Label
+    id: lblItemList
+    anchors.top: listLoot.bottom
+    anchors.left: parent.left
+    margin: 8 0 0 145
+    text-auto-resize: true
+    !text: tr('Itens na lista: 0.')
+
+  Button
+    id: btnAdd
+    width: 83
+    anchors.top: lblItemList.bottom
+    anchors.left: parent.left
+    margin: 7 0 0 0
+    !text: tr('Adicionar')
+    @onClick: addSlotLoot()
+
+  Button
+    id: btnRemover
+    width: 83
+    anchors.top: lblItemList.bottom
+    anchors.left: btnAdd.right
+    margin: 7 0 0 2
+    !text: tr('Remover')
+    @onClick: removeSlot()
+
+  Button
+    id: btnLimpar
+    width: 83
+    anchors.top: lblItemList.bottom
+    anchors.left: btnRemover.right
+    margin: 7 0 0 2
+    !text: tr('Limpar')
+    @onClick: removeListLoot()
+
+  Button
+    id: btnAtivar
+    width: 253
+    anchors.top: btnAdd.bottom
+    anchors.left: parent.left
+    margin-top: 8
+    color: green
+    !text: tr('Ativar Auto-Loot')
+    &onClick:  |
+      function(self)
+        local autoLoot = g_settings.getBoolean('autoLoot', false)
+        if autoLoot then
+          self:setText('Desativar  Auto-Loot') 
+          self:setColor('red')
+        else
+          self:setText('Ativar Auto-Loot')
+          self:setColor('green')
+        end
+        g_settings.set('autoLoot', not autoLoot)
+        g_game.talk('!autoloot '..(autoLoot and 'off' or 'on'))
+      end
+
+  Label
+    id: lbl
+    anchors.top: parent.top
+    anchors.left: lootScrollBar.right
+    margin-left: 10
+    !text: tr('Selecione ou digite o nome do item:')
+
+  Item
+    id: itemSelected
+    anchors.top: lbl.bottom
+    anchors.left: lootScrollBar.right
+    margin: 8 0 0 10
+
+  TextEdit
+    id: edtItemName
+    anchors.top: lbl.top
+    anchors.left: itemSelected.right
+    anchors.right: parent.right
+    margin: 27 0 0 5
+
+  Button
+    id: btnSelect
+    width: 75
+    anchors.top: itemSelected.bottom
+    anchors.left: lootScrollBar.right
+    margin: 8 0 0 10
+    !text: tr('Selecionar')
+    @onClick: startChooseItem()
+
+  Button
+    id: btnApagar
+    width: 75
+    anchors.top: itemSelected.bottom
+    anchors.left: btnSelect.right
+    margin: 8 0 0 2
+    !text: tr('Apagar')
+    @onClick: eraseLoot()
+
+  Button
+    id: btnAdicionar
+    width: 75
+    anchors.top: itemSelected.bottom
+    anchors.left: btnApagar.right
+    margin: 8 0 0 2
+    !text: tr('Adicionar')
+    @onClick: addLoot(true)
+
+  Button
+    id: btnClose
+    !text: tr('Close')
+    anchors.right: parent.right
+    anchors.top: btnAdd.bottom
+    margin-top: 8
+    @onClick: toggle()
