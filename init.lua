@@ -16,7 +16,7 @@ Services = {
 -- Servers accept http login url, websocket login url or ip:port:version
 Servers = {
   TesteServer = "134.65.253.242:7171:861",
-  Tenebra = "tenebra-global.com:7171:860"
+  Tenebra = "tenebra-global.com:7171:861"
 }
 
 --Server = "ws://otclient.ovh:3000/"
